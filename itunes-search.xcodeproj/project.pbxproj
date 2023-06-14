@@ -27,6 +27,7 @@
 		D221DE5D2A389AAC000220F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D221DE5C2A389AAC000220F8 /* AppDelegate.swift */; };
 		D221DE5F2A389CCF000220F8 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D221DE5E2A389CCF000220F8 /* DIContainer.swift */; };
 		D221DE622A389DDA000220F8 /* AppSearchPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D221DE612A389DDA000220F8 /* AppSearchPage.swift */; };
+		EC5578DF2A3975A600262DDE /* AppSearchPage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5578DE2A3975A600262DDE /* AppSearchPage2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,7 @@
 		D221DE5C2A389AAC000220F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D221DE5E2A389CCF000220F8 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		D221DE612A389DDA000220F8 /* AppSearchPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchPage.swift; sourceTree = "<group>"; };
+		EC5578DE2A3975A600262DDE /* AppSearchPage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchPage2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				D221DE612A389DDA000220F8 /* AppSearchPage.swift */,
+				EC5578DE2A3975A600262DDE /* AppSearchPage2.swift */,
 			);
 			path = AppSearchPage;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC5578DF2A3975A600262DDE /* AppSearchPage2.swift in Sources */,
 				D221DE5D2A389AAC000220F8 /* AppDelegate.swift in Sources */,
 				D221DE5F2A389CCF000220F8 /* DIContainer.swift in Sources */,
 				D221DE622A389DDA000220F8 /* AppSearchPage.swift in Sources */,
