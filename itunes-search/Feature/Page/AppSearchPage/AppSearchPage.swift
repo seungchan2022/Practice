@@ -1,14 +1,21 @@
 import SwiftUI
+import DesignSystem
 
 struct AppSearchPage {
-
+  
   @FocusState private var isFocused
   @State private var keyword = ""
   @State private var items: [String] = mock
 }
 
-extension AppSearchPage: View {
+extension AppSearchPage {
+  var HeaderComponentViewState: HeaderComponent.ViewState {
+    .init(placeHolder: "검색할 앱을 적으시오.")
+  }
+}
 
+extension AppSearchPage: View {
+  
   var filter: (String) -> [String] {
     { text in
       mock.filter{
@@ -16,31 +23,7 @@ extension AppSearchPage: View {
       }
     }
   }
-
-  @ViewBuilder
-  var header: some View {
-    VStack {
-      VStack {
-        HStack {
-          TextField("검색하실 앱의 이름을 적으시오", text: $keyword)
-            .textFieldStyle(.plain)
-            .focused($isFocused, equals: true)
-          if !keyword.isEmpty {
-            Button(action: { keyword = "" }) {
-              Text("취소")
-            }
-          }
-        }
-        .frame(maxHeight: 50)
-        .withDefaultPadding(edges: .horizontal)
-        .withRoundRect(fillColor: .white, cornerRadius: 8, strokeColor: .black, strokeWidth: 1)
-      }
-    }
-    .withDefaultPadding()
-    .background(keyword.isEmpty ? .blue : .gray)
-    .animation(.easeInOut, value: keyword)
-  }
-
+  
   @ViewBuilder
   var content: some View {
     List {
@@ -56,17 +39,21 @@ extension AppSearchPage: View {
     }
     .listStyle(.plain)
     .animation(.spring(), value: items)
-
   }
-
+  
   var body: some View {
     VStack(spacing: .zero) {
-      header
+      HeaderComponent(
+        viewState: HeaderComponentViewState,
+        text: $keyword,
+        isFocused: $isFocused,
+        clearAction: { keyword = "" },
+        searchAction: { print("DEBUG: 검색") })
       content
     }
-    .background(.white)
+    .background(AppColor.Background.base)
     .onAppear {
-      print(items)
+            print(items)
     }
     .onTapGesture {
       isFocused = false
@@ -99,8 +86,6 @@ extension View {
     padding(edges, 16)
   }
 }
-
-
 
 let mock: [String] = [
   "camera",

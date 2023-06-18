@@ -11,7 +11,7 @@ extension AppMain {
 extension AppMain: App {
   var body: some Scene {
     WindowGroup {
-      AppSearchPage2()
+      AppSearchPage()
 //            .preferredColorScheme(.dark)
     }
   }
