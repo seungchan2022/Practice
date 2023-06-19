@@ -1,4 +1,5 @@
 import SwiftUI
+import DesignSystem
 
 struct AppSearchPage2 {
   
@@ -8,126 +9,49 @@ struct AppSearchPage2 {
   @FocusState private var isFocused
 }
 
+extension AppSearchPage2 {
+  var HeaderComponentViewState: HeaderComponent.ViewState {
+    .init(placeHolder: "검색할 앱을 적으시오.")
+  }
+}
+
+// 리스트가 필터가 안됨 ?????
+extension AppSearchPage2 {
+  
+  var ContentComponentViewState: ContentComponent.ViewState {
+    .init(items: items)
+  }
+}
+
 extension AppSearchPage2: View {
   
   // 검색을 하면 검색한 텍스트에 따라 필터링 되도록 -> 대소문자 구분없이 검색
   var filter: (String) -> [String] {
     { text in
-      mock2.filter{
+      items.filter{
         $0.lowercased().contains(text.lowercased())
       }
     }
   }
-  
-  @ViewBuilder
-  var header: some View {
-    VStack {
-      HStack {
-        
-        Spacer()
-        
-        HStack {
-          Image(systemName: "magnifyingglass")
-            .renderingMode(.template)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 15, height: 15)
-            .foregroundColor(.gray)
-          
-          TextField("검색하실 앱의 이름을 적으시오", text: $keyword)
-          //                    .foregroundColor(.blue)
-            .font(.system(size: 14, weight: .medium))
-            .textFieldStyle(.plain)
-          // textField를 선택하면 키보드가 나오고
-            .focused($isFocused, equals: true)
-          
-          if !keyword.isEmpty {
-            Button(action: { keyword = "" }) {
-              Image(systemName: "xmark.circle.fill")
-                .imageScale(.large)
-                .frame(width: 15, height: 15)
-                .foregroundColor(.gray)
-            }
-          }
-        }
-        //        .frame(maxHeight: 50)
-        .frame(width: 280 ,height: 35)
-        .padding(.horizontal, 16)
-        .background(
-          RoundedRectangle(cornerRadius: 8)
-            .stroke(.black, lineWidth: 1)
-            .background(
-              RoundedRectangle(cornerRadius: 8)
-                .fill(.gray.opacity(0.2)))
-        )
-        
-        Spacer()
-        
-        Button(action: { keyword = "" }) {
-          Text("취소")
-            .font(.system(size: 18, weight: .medium))
-        }
-        
-        Spacer()
-      } // HStack
-    } // VStack
-    .padding(.top, 10)
-    .padding(.horizontal, 5)
-  }
-  
-  @ViewBuilder
-  var content: some View {
-    List {
-      ForEach(items, id: \.self) { title in
-        // list에 있는 cell을 눌렀을때 배경색이 바뀌지 않고 오른쪽에 있는 화살표가 안보이게 하기 위해 ZStack 이용
-        ZStack {
-          NavigationLink(destination: DetailView().navigationBarBackButtonHidden(true)) {
-            EmptyView()
-          }
-          .opacity(0)
-          
-          VStack(alignment: .leading) {
-            HStack {
-              Image(systemName: "magnifyingglass")
-                .renderingMode(.template)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 15, height: 15)
-                .foregroundColor(.gray)
-              
-              Text(title)
-                .font(.system(size: 14, weight: .medium))
-            }
-            Divider().background(Color.white)
-          }
-        }
-        .listRowInsets(EdgeInsets())
-        .listRowSeparator(.hidden)
-        .padding(.horizontal, 16)
-        .listRowBackground(Color.clear)
-      }
-    }
-    // 다른곳을 탭하였을때가 아닌 드래그 하였을때 키보드가 내려가도록
-    // => 드래그로 바꾼이유: 예를들어 검색을 했는데 화면을 꽉 채우게 검색 결과가 나오면 빈곳을 탭할곳이 없어서 원하지 않은 아이템을 선택할 수 있으므로
-    // => 문제가 맨위를 드래그 해야 사라진다... -> 아래로 드래그 할때도 없어지게 하려면...?
-    .scrollDismissesKeyboard(.interactively)
-    .listStyle(.plain)
-  }
-  
   var body: some View {
     NavigationView {
       // => 기본으로 spacing이 4 들어가있음
       VStack(spacing: 20) {
-        header
-        content
+        HeaderComponent(viewState: HeaderComponentViewState,
+                        text: $keyword,
+                        isFocused: $isFocused,
+                        clearAction: { keyword = ""},
+                        searchAction: { print("DEBUG: 검색") })
+        ContentComponent(viewState: ContentComponentViewState, items: $items, keyword: keyword)
       }
-      .background(.black)
+      .background(AppColor2.Background.base)
       // 탭 제스처를 사용하면 navigation를 통한 view 이동이 안됌
       //      .onTapGesture {
       //        isFocused = false
       //      }
       // 키워드가 비어있으면 모든 리스트, 키워드를 입력하면 필터링된 텍스트가 나오도록
       .onChange(of: keyword) {
+//        print("DEBUG: keyword changed: \($0)")
         items = keyword.isEmpty ? mock2 : filter($0)
       }
     }
@@ -150,7 +74,7 @@ let mock2: [String] = [
   "방탈출 미스터리 게임",
 ]
 
-struct DetailView {
+struct AppDetailPage {
   @State private var keyword = "방탈출"
   
   // textField를 선택하면 키보드가 나오게 하기 위해
@@ -158,103 +82,28 @@ struct DetailView {
   @Environment(\.dismiss) var dismiss
 }
 
-extension DetailView: View {
-  
-  @ViewBuilder
-  var header: some View {
-    VStack(spacing: 10) {
-      HStack {
-        HStack {
-          Image(systemName: "magnifyingglass")
-            .renderingMode(.template)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 15, height: 15)
-            .foregroundColor(.gray)
-          
-          TextField("", text: $keyword)
-            .font(.system(size: 14, weight: .medium))
-            .textFieldStyle(.plain)
-          // textField를 선택하면 키보드가 나오고
-            .focused($isFocused, equals: true)
-          
-          if !keyword.isEmpty {
-            Button(action: { dismiss() }) {
-              Image(systemName: "xmark.circle.fill")
-                .frame(width: 15, height: 15)
-                .foregroundColor(.gray)
-            }
-          }
-        }
-        .frame(width: 280 ,height: 35)
-        .padding(.horizontal, 16)
-        .background(
-          RoundedRectangle(cornerRadius: 8)
-            .stroke(.black, lineWidth: 1)
-            .background(
-              RoundedRectangle(cornerRadius: 8)
-                .fill(.gray.opacity(0.2)))
-        )
-        
-        Spacer()
-        
-        Button(action: {  }) {
-          Text("취소")
-            .font(.system(size: 18, weight: .medium))
-            .onTapGesture {
-              keyword = ""
-              dismiss()
-            }
-        }
-        
-        Spacer()
-        
-      } // HStack
-      
-      HStack {
-        Button {
-          print("DEBUG: 공포 버튼")
-        } label: {
-          Text("공포")
-            .font(.system(size: 16, weight: .medium))
-            .foregroundColor(.blue)
-            .frame(width: 60, height: 30)
-            .background(
-              RoundedRectangle(cornerRadius: 20)
-                .stroke(.gray.opacity(0.5), lineWidth: 1)
-                .background(
-                  RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.clear))
-            )
-        }
-        
-        Spacer()
-      }
-    } // VStack
-    .padding(.top, 10)
-    .padding(.bottom, 10)
-    .padding(.horizontal, 10)
-    .background(.gray.opacity(0.2))
+extension AppDetailPage {
+  var HeaderComponentViewState: HeaderComponent.ViewState {
+    .init(placeHolder: "검색할 앱을 적으시오.")
   }
-  
-  @ViewBuilder
-  var content: some View {
-    List {
-      ForEach(Post.MOCK_POSTS, id: \.self) { post in
-        DetailCellView(post: post)
-      }
-      .listRowSeparator(.hidden)
-      .listRowInsets(EdgeInsets())
-    }
-    .background(.black)
-    .listStyle(.plain)
-    .scrollDismissesKeyboard(.interactively)
+}
+
+extension AppDetailPage {
+  var ContentComponentViewState: ContentComponent.ViewState {
+    .init(post: Post.MOCK_POSTS)
   }
-  
+}
+
+extension AppDetailPage: View {
+    
   var body: some View {
     VStack(spacing: .zero) {
-      header
-      content
+      HeaderComponent(viewState: HeaderComponentViewState,
+                      text: $keyword,
+                      isFocused: $isFocused,
+                      clearAction: { dismiss() },
+                      searchAction: { print("DEBUG: 검색")})
+      ContentComponent(viewState: ContentComponentViewState)
     }
     .onTapGesture {
       isFocused = false
@@ -287,10 +136,9 @@ extension DetailCellView: View {
         VStack(alignment: .leading, spacing: 5) {
           Text(post.title)
             .font(.system(size: 14, weight: .bold))
-            .foregroundColor(.white)
           Text(post.explantion)
             .font(.system(size: 12, weight: .medium))
-            .foregroundColor(.gray)
+            .foregroundColor(AppColor2.Label.base)
           HStack(spacing: 4) {
             ForEach(0 ..< 5, id: \.self) { star in
               Image(systemName: post.stars)
@@ -302,7 +150,7 @@ extension DetailCellView: View {
             Text(post.evaluation)
               .font(.system(size: 12, weight: .ultraLight))
           }
-          .foregroundColor(.gray)
+          .foregroundColor(AppColor.Tint.secondary)
         }
         
         Spacer()
@@ -314,7 +162,7 @@ extension DetailCellView: View {
           } label: {
             Text("받기")
               .font(.system(size: 14, weight: .bold))
-              .foregroundColor(.blue)
+              .foregroundColor(AppColor2.Tint.primary)
               .frame(width: 80, height: 30)
               .background(
                 RoundedRectangle(cornerRadius: 20)
@@ -323,7 +171,7 @@ extension DetailCellView: View {
           }
           Text(post.pathOfPurchase)
             .font(.system(size: 10, weight: .light))
-            .foregroundColor(.gray)
+            .foregroundColor(AppColor2.Label.base)
         }
         .padding(.top, 20)
       }
@@ -357,7 +205,6 @@ extension DetailCellView: View {
     }
     .padding(.horizontal, 10)
     .padding(.vertical, 20)
-    .background(.black)
   }
   
   var body: some View {
