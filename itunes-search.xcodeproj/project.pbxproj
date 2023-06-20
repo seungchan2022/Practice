@@ -41,8 +41,6 @@
 		ECB1BBD22A3EE41A00BF572E /* AppSearchPage+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB1BBD12A3EE41A00BF572E /* AppSearchPage+Header.swift */; };
 		ECE1C41A2A416FD300FD4993 /* AppDetailListPage+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE1C4192A416FD300FD4993 /* AppDetailListPage+Content.swift */; };
 		ECE1C41E2A41963A00FD4993 /* LinkNavigator in Frameworks */ = {isa = PBXBuildFile; productRef = ECE1C41D2A41963A00FD4993 /* LinkNavigator */; };
-		ECE1C4212A4196A000FD4993 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE1C4202A4196A000FD4993 /* AppDependency.swift */; };
-		ECE1C4232A4196D400FD4993 /* AppRouterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE1C4222A4196D400FD4993 /* AppRouterGroup.swift */; };
 		ECF7EB8A2A40340700189774 /* AppTextField2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7EB892A40340700189774 /* AppTextField2.swift */; };
 		ECF7EB8C2A40388A00189774 /* AppSearchPage2+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7EB8B2A40388A00189774 /* AppSearchPage2+Header.swift */; };
 		ECF7EB8E2A40417200189774 /* AppDetailPage+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7EB8D2A40417200189774 /* AppDetailPage+Header.swift */; };
@@ -167,8 +165,6 @@
 		ECB1BBCE2A3EDCD900BF572E /* AppTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextField.swift; sourceTree = "<group>"; };
 		ECB1BBD12A3EE41A00BF572E /* AppSearchPage+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSearchPage+Header.swift"; sourceTree = "<group>"; };
 		ECE1C4192A416FD300FD4993 /* AppDetailListPage+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDetailListPage+Content.swift"; sourceTree = "<group>"; };
-		ECE1C4202A4196A000FD4993 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
-		ECE1C4222A4196D400FD4993 /* AppRouterGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterGroup.swift; sourceTree = "<group>"; };
 		ECF7EB892A40340700189774 /* AppTextField2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextField2.swift; sourceTree = "<group>"; };
 		ECF7EB8B2A40388A00189774 /* AppSearchPage2+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSearchPage2+Header.swift"; sourceTree = "<group>"; };
 		ECF7EB8D2A40417200189774 /* AppDetailPage+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDetailPage+Header.swift"; sourceTree = "<group>"; };
@@ -232,7 +228,6 @@
 		D221DDC02A388DA7000220F8 = {
 			isa = PBXGroup;
 			children = (
-				ECE1C41F2A41968B00FD4993 /* LinkNavigator */,
 				D221DDCB2A388DA7000220F8 /* itunes-search */,
 				D221DDE62A389157000220F8 /* Domain */,
 				D221DDF42A389157000220F8 /* DomainTests */,
@@ -503,15 +498,6 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		ECE1C41F2A41968B00FD4993 /* LinkNavigator */ = {
-			isa = PBXGroup;
-			children = (
-				ECE1C4202A4196A000FD4993 /* AppDependency.swift */,
-				ECE1C4222A4196D400FD4993 /* AppRouterGroup.swift */,
-			);
-			path = LinkNavigator;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -780,10 +766,8 @@
 				D221DE622A389DDA000220F8 /* AppSearchPage.swift in Sources */,
 				ECF7EB902A40484900189774 /* AppSearchPage2+Content.swift in Sources */,
 				D221DE5B2A389A54000220F8 /* AppMain.swift in Sources */,
-				ECE1C4212A4196A000FD4993 /* AppDependency.swift in Sources */,
 				ECB1BBD22A3EE41A00BF572E /* AppSearchPage+Header.swift in Sources */,
 				ECF7EB8C2A40388A00189774 /* AppSearchPage2+Header.swift in Sources */,
-				ECE1C4232A4196D400FD4993 /* AppRouterGroup.swift in Sources */,
 				ECF7EB8E2A40417200189774 /* AppDetailPage+Header.swift in Sources */,
 				ECF7EB922A40634E00189774 /* AppDetailPage+Content.swift in Sources */,
 				ECE1C41A2A416FD300FD4993 /* AppDetailListPage+Content.swift in Sources */,

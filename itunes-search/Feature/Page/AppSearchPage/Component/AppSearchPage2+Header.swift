@@ -44,7 +44,7 @@ extension AppSearchPage2.HeaderComponent: View {
         .padding(.horizontal, 16)
         .background(
           RoundedRectangle(cornerRadius: 8)
-            .fill(.gray.opacity(0.2))
+            .fill(AppColor2.Background.base3)
         )
         
         Spacer()

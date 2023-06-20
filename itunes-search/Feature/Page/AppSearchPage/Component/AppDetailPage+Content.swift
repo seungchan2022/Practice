@@ -12,7 +12,7 @@ extension AppDetailPage {
 extension AppDetailPage.ContentComponent: View {
   var body: some View {
     List {
-      ForEach(Post.MOCK_POSTS, id: \.self) { post in
+      ForEach(viewState.post, id: \.self) { post in
         AppDetailListPage(post: post)
       }
       .listRowSeparator(.hidden)

@@ -1,14 +1,12 @@
 import SwiftUI
 import DesignSystem
-import LinkNavigator
 
 struct AppSearchPage2 {
-//  let navigator: LinkNavigatorType
   
   @State private var keyword = ""
   @State private var items: [String] = mock2
   // 필터링된 아이템들을 담기 위해
-  @State private var filteredItems: [String] = mock2
+  @State private var filteredItems = [String]()
   // textField를 선택하면 키보드가 나오게 하기 위해
   @FocusState private var isFocused
 }
