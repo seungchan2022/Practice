@@ -5,24 +5,14 @@ import DesignSystem
 extension AppSearchPage2 {
   struct ContentComponent {
     let viewState: ViewState
-    @Binding var items: [String]
-    let keyword: String
   }
 }
 
 extension AppSearchPage2.ContentComponent: View {
   
-  var filteredItems: [String] {
-    if keyword.isEmpty {
-      return viewState.items
-    } else {
-      return viewState.items.filter { $0.lowercased().contains(keyword.lowercased()) }
-    }
-  }
-  
   var body: some View {
     List {
-      ForEach(filteredItems, id: \.self) { title in
+      ForEach(viewState.items, id: \.self) { title in
         ZStack {
           NavigationLink(destination: AppDetailPage().navigationBarBackButtonHidden(true)) {
             EmptyView()

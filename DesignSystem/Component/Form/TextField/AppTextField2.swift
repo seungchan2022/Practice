@@ -26,7 +26,7 @@ extension AppTextField2: View {
   }
 }
 
-
+// placeholder의 color를 바꾸기 위해
 extension View {
   fileprivate func placeholder<Content: View>(
     when shouldShow: Bool,

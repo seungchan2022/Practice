@@ -13,7 +13,7 @@ extension AppDetailPage.ContentComponent: View {
   var body: some View {
     List {
       ForEach(Post.MOCK_POSTS, id: \.self) { post in
-        DetailCellView(post: post)
+        AppDetailListPage(post: post)
       }
       .listRowSeparator(.hidden)
       .listRowInsets(EdgeInsets())

@@ -1,10 +1,16 @@
 import UIKit
+import SwiftUI
+import LinkNavigator
 
 final class AppDelegate: NSObject {
 
   let diContainer: DIContainer = {
     DIContainer()
   }()
+  
+//  var navigator: LinkNavigator {
+//    LinkNavigator(dependency: AppDependency(), builders: AppRouterGroup().routers)
+//  }
 }
 
 extension AppDelegate: UIApplicationDelegate {
@@ -15,3 +21,5 @@ extension AppDelegate: UIApplicationDelegate {
     true
   }
 }
+
+

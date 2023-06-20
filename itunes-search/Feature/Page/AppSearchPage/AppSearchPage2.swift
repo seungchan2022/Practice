@@ -1,10 +1,14 @@
 import SwiftUI
 import DesignSystem
+import LinkNavigator
 
 struct AppSearchPage2 {
+//  let navigator: LinkNavigatorType
   
   @State private var keyword = ""
   @State private var items: [String] = mock2
+  // 필터링된 아이템들을 담기 위해
+  @State private var filteredItems: [String] = mock2
   // textField를 선택하면 키보드가 나오게 하기 위해
   @FocusState private var isFocused
 }
@@ -15,44 +19,43 @@ extension AppSearchPage2 {
   }
 }
 
-// 리스트가 필터가 안됨 ?????
 extension AppSearchPage2 {
   
   var ContentComponentViewState: ContentComponent.ViewState {
-    .init(items: items)
+    .init(items: filteredItems)
   }
 }
 
 extension AppSearchPage2: View {
-  
-  // 검색을 하면 검색한 텍스트에 따라 필터링 되도록 -> 대소문자 구분없이 검색
-  var filter: (String) -> [String] {
-    { text in
-      items.filter{
-        $0.lowercased().contains(text.lowercased())
-      }
-    }
-  }
   var body: some View {
     NavigationView {
-      // => 기본으로 spacing이 4 들어가있음
       VStack(spacing: 20) {
-        HeaderComponent(viewState: HeaderComponentViewState,
-                        text: $keyword,
-                        isFocused: $isFocused,
-                        clearAction: { keyword = ""},
-                        searchAction: { print("DEBUG: 검색") })
-        ContentComponent(viewState: ContentComponentViewState, items: $items, keyword: keyword)
+        HeaderComponent(
+          viewState: HeaderComponentViewState,
+          text: $keyword,
+          isFocused: $isFocused,
+          clearAction: { keyword = "" },
+          searchAction: { print("DEBUG: 검색") }
+        )
+        ContentComponent(viewState: ContentComponentViewState)
       }
       .background(AppColor2.Background.base)
-      // 탭 제스처를 사용하면 navigation를 통한 view 이동이 안됌
-      //      .onTapGesture {
-      //        isFocused = false
-      //      }
-      // 키워드가 비어있으면 모든 리스트, 키워드를 입력하면 필터링된 텍스트가 나오도록
-      .onChange(of: keyword) {
-//        print("DEBUG: keyword changed: \($0)")
-        items = keyword.isEmpty ? mock2 : filter($0)
+      .onChange(of: keyword) { newKeyword in
+        updateFilteredItems()
+      }
+    }
+    .onAppear {
+      updateFilteredItems()
+    }
+  }
+  
+  // 아무것도 입력을 안하면 모든 리스트를 보여주고, 입력을 하면 필터링된 리스트를 보여주기 위해
+  private func updateFilteredItems() {
+    if keyword.isEmpty {
+      filteredItems = items
+    } else {
+      filteredItems = items.filter {
+        $0.lowercased().contains(keyword.lowercased())
       }
     }
   }
@@ -95,7 +98,7 @@ extension AppDetailPage {
 }
 
 extension AppDetailPage: View {
-    
+  
   var body: some View {
     VStack(spacing: .zero) {
       HeaderComponent(viewState: HeaderComponentViewState,
@@ -111,104 +114,20 @@ extension AppDetailPage: View {
   }
 }
 
-struct DetailCellView {
+struct AppDetailListPage {
   let post: Post
-  // 사이즈 정의:   |-|    ||     ||.    |-|
-  // =>  |padding|  image  |spacing|  image  |spacing|  image  |padding|
-  // => padding: 10, spacing: 10
-  private let imageDimension: CGFloat = (UIScreen.main.bounds.width - 40) / 3
-  private var imageHeight: CGFloat {
-    imageDimension * 2
+}
+
+extension AppDetailListPage {
+  var ContentComponentViewState: ContentComponent.ViewState {
+    .init(post: post)
   }
 }
 
-extension DetailCellView: View {
-  
-  @ViewBuilder
-  var content: some View {
-    VStack {
-      HStack {
-        Image(post.thumbnail)
-          .resizable()
-          .scaledToFill()
-          .frame(width: 60, height: 60)
-          .cornerRadius(20)
-        VStack(alignment: .leading, spacing: 5) {
-          Text(post.title)
-            .font(.system(size: 14, weight: .bold))
-          Text(post.explantion)
-            .font(.system(size: 12, weight: .medium))
-            .foregroundColor(AppColor2.Label.base)
-          HStack(spacing: 4) {
-            ForEach(0 ..< 5, id: \.self) { star in
-              Image(systemName: post.stars)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFill()
-                .frame(width: 10, height: 10)
-            }
-            Text(post.evaluation)
-              .font(.system(size: 12, weight: .ultraLight))
-          }
-          .foregroundColor(AppColor.Tint.secondary)
-        }
-        
-        Spacer()
-        
-        VStack(spacing: 5) {
-          Button {
-            // => 버튼만 눌렀을대 실행이 되야 된는데 왜 모든 곳을 눌러도 실행이 되는건가??
-            print("DEBUG: Did tap button..")
-          } label: {
-            Text("받기")
-              .font(.system(size: 14, weight: .bold))
-              .foregroundColor(AppColor2.Tint.primary)
-              .frame(width: 80, height: 30)
-              .background(
-                RoundedRectangle(cornerRadius: 20)
-                  .fill(.gray.opacity(0.2))
-              )
-          }
-          Text(post.pathOfPurchase)
-            .font(.system(size: 10, weight: .light))
-            .foregroundColor(AppColor2.Label.base)
-        }
-        .padding(.top, 20)
-      }
-      
-      Group {
-        HStack(spacing: 10) {
-          // => 인덱스가 짝수이면 하나의 이미지 설명, 홀수이면 3개의 이미지 설명이 나오도록 설정
-          if let index = Post.MOCK_POSTS.firstIndex(of: post) {
-            if index % 2 == 0 {
-              Image(post.imageDescriptions)
-                .resizable()
-                .scaledToFill()
-                .frame(width: (UIScreen.main.bounds.width - 20), height: (UIScreen.main.bounds.width / 2) + 30)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-            } else {
-              ForEach(0 ..< 3, id: \.self) { index in
-                // 이미지가 랜덤으로 3개가 선택되도록
-                let randomIndex = Int.random(in: 1 ..< 13)
-                Image("image\(randomIndex + index)")
-                  .resizable()
-                  .scaledToFill()
-                  .frame(width: imageDimension, height: imageHeight)
-                  .clipShape(RoundedRectangle(cornerRadius: 10))
-              }
-            }
-          }
-        }
-      }
-      .padding(.top)
-      
-    }
-    .padding(.horizontal, 10)
-    .padding(.vertical, 20)
-  }
+extension AppDetailListPage: View {
   
   var body: some View {
-    content
+    ContentComponent(viewState: ContentComponentViewState)
   }
 }
 
@@ -355,20 +274,4 @@ extension Post {
     
   ]
 }
-
-
-
-// - 네비게이션 view안에서 드래그 하면 navigationBar위로 cell들이 올라갈때 searchBar의 배경이 흐릿하게 보여야 되는데 안보인다
-//    => 일단 Header의 색을 바꿔서 네비게이션 안의 view인 것처럼 표현
-// - 텍스트 필드 크기 조정, 취소 버튼 크기 조정
-// - 다른곳을 탭하였을때가 아닌 드래그 하였을때 키보드가 내려가도록
-//    => 드래그로 바꾼이유: 예를들어 검색을 했는데 화면을 꽉 채우게 검색 결과가 나오면 빈곳을 탭할곳이 없어서 원하지 않은 아이템을 선택할 수 있으므로
-//    => 문제가 맨위를 드래그 해야 사라진다... -> 아래로 드래그 할때도 없어지게 하려면...?
-
-// - 패딩을 주는데 자꾸 짤리길래 무언가 했는데 화면의 너비를 잘못 설정함
-//    => 화면의 너비를 정의하고 사용할때는 아이템간의 spacing과 padding 모두 신경쓴다음 정의 해주어야 된다!
-//    ex) 사이즈 정의:   |-|    ||     ||.    |-|
-//      =>  |padding|  image  |spacing|  image  |spacing|  image  |padding|
-//      => padding: 10, spacing: 10
-//      private let imageDimension: CGFloat = (UIScreen.main.bounds.width - 40) / 3
 

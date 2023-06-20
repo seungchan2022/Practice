@@ -65,11 +65,11 @@ extension AppDetailPage.HeaderComponent: View {
           } label: {
             Text("공포")
               .font(.system(size: 16, weight: .medium))
-              .foregroundColor(.blue)
+              .foregroundColor(AppColor2.Tint.primary)
               .frame(width: 60, height: 30)
               .background(
                 RoundedRectangle(cornerRadius: 20)
-                  .stroke(.gray.opacity(0.5), lineWidth: 1)
+                  .stroke(AppColor2.Label.base, lineWidth: 1)
                   .background(
                     RoundedRectangle(cornerRadius: 20)
                       .fill(Color.clear))
@@ -79,13 +79,11 @@ extension AppDetailPage.HeaderComponent: View {
           Spacer()
         }
         .padding(.horizontal, 10)
-        
       } // VStack
     } // vstack
     .padding(.top, 10)
     .padding(.bottom, 10)
     .padding(.horizontal, 10)
-    
   }
 }
 

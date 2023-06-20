@@ -39,6 +39,10 @@
 		EC7B3A742A3ED2EE00D7ACC2 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7B3A732A3ED2EE00D7ACC2 /* AppColor.swift */; };
 		ECB1BBCF2A3EDCD900BF572E /* AppTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB1BBCE2A3EDCD900BF572E /* AppTextField.swift */; };
 		ECB1BBD22A3EE41A00BF572E /* AppSearchPage+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB1BBD12A3EE41A00BF572E /* AppSearchPage+Header.swift */; };
+		ECE1C41A2A416FD300FD4993 /* AppDetailListPage+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE1C4192A416FD300FD4993 /* AppDetailListPage+Content.swift */; };
+		ECE1C41E2A41963A00FD4993 /* LinkNavigator in Frameworks */ = {isa = PBXBuildFile; productRef = ECE1C41D2A41963A00FD4993 /* LinkNavigator */; };
+		ECE1C4212A4196A000FD4993 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE1C4202A4196A000FD4993 /* AppDependency.swift */; };
+		ECE1C4232A4196D400FD4993 /* AppRouterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE1C4222A4196D400FD4993 /* AppRouterGroup.swift */; };
 		ECF7EB8A2A40340700189774 /* AppTextField2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7EB892A40340700189774 /* AppTextField2.swift */; };
 		ECF7EB8C2A40388A00189774 /* AppSearchPage2+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7EB8B2A40388A00189774 /* AppSearchPage2+Header.swift */; };
 		ECF7EB8E2A40417200189774 /* AppDetailPage+Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF7EB8D2A40417200189774 /* AppDetailPage+Header.swift */; };
@@ -162,6 +166,9 @@
 		EC7B3A732A3ED2EE00D7ACC2 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		ECB1BBCE2A3EDCD900BF572E /* AppTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextField.swift; sourceTree = "<group>"; };
 		ECB1BBD12A3EE41A00BF572E /* AppSearchPage+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSearchPage+Header.swift"; sourceTree = "<group>"; };
+		ECE1C4192A416FD300FD4993 /* AppDetailListPage+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDetailListPage+Content.swift"; sourceTree = "<group>"; };
+		ECE1C4202A4196A000FD4993 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
+		ECE1C4222A4196D400FD4993 /* AppRouterGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterGroup.swift; sourceTree = "<group>"; };
 		ECF7EB892A40340700189774 /* AppTextField2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextField2.swift; sourceTree = "<group>"; };
 		ECF7EB8B2A40388A00189774 /* AppSearchPage2+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSearchPage2+Header.swift"; sourceTree = "<group>"; };
 		ECF7EB8D2A40417200189774 /* AppDetailPage+Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDetailPage+Header.swift"; sourceTree = "<group>"; };
@@ -176,6 +183,7 @@
 			files = (
 				EC7B3A5F2A3EC95E00D7ACC2 /* DesignSystem.framework in Frameworks */,
 				D221DDFA2A389157000220F8 /* Domain.framework in Frameworks */,
+				ECE1C41E2A41963A00FD4993 /* LinkNavigator in Frameworks */,
 				D221DE1D2A389169000220F8 /* Platform.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,6 +232,7 @@
 		D221DDC02A388DA7000220F8 = {
 			isa = PBXGroup;
 			children = (
+				ECE1C41F2A41968B00FD4993 /* LinkNavigator */,
 				D221DDCB2A388DA7000220F8 /* itunes-search */,
 				D221DDE62A389157000220F8 /* Domain */,
 				D221DDF42A389157000220F8 /* DomainTests */,
@@ -489,8 +498,18 @@
 				ECF7EB8F2A40484900189774 /* AppSearchPage2+Content.swift */,
 				ECF7EB8D2A40417200189774 /* AppDetailPage+Header.swift */,
 				ECF7EB912A40634E00189774 /* AppDetailPage+Content.swift */,
+				ECE1C4192A416FD300FD4993 /* AppDetailListPage+Content.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		ECE1C41F2A41968B00FD4993 /* LinkNavigator */ = {
+			isa = PBXGroup;
+			children = (
+				ECE1C4202A4196A000FD4993 /* AppDependency.swift */,
+				ECE1C4222A4196D400FD4993 /* AppRouterGroup.swift */,
+			);
+			path = LinkNavigator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -540,6 +559,9 @@
 				EC7B3A5E2A3EC95E00D7ACC2 /* PBXTargetDependency */,
 			);
 			name = "itunes-search";
+			packageProductDependencies = (
+				ECE1C41D2A41963A00FD4993 /* LinkNavigator */,
+			);
 			productName = "itunes-search";
 			productReference = D221DDC92A388DA7000220F8 /* itunes-search.app */;
 			productType = "com.apple.product-type.application";
@@ -681,6 +703,9 @@
 				Base,
 			);
 			mainGroup = D221DDC02A388DA7000220F8;
+			packageReferences = (
+				ECE1C41C2A41963A00FD4993 /* XCRemoteSwiftPackageReference "LinkNavigator" */,
+			);
 			productRefGroup = D221DDCA2A388DA7000220F8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -755,10 +780,13 @@
 				D221DE622A389DDA000220F8 /* AppSearchPage.swift in Sources */,
 				ECF7EB902A40484900189774 /* AppSearchPage2+Content.swift in Sources */,
 				D221DE5B2A389A54000220F8 /* AppMain.swift in Sources */,
+				ECE1C4212A4196A000FD4993 /* AppDependency.swift in Sources */,
 				ECB1BBD22A3EE41A00BF572E /* AppSearchPage+Header.swift in Sources */,
 				ECF7EB8C2A40388A00189774 /* AppSearchPage2+Header.swift in Sources */,
+				ECE1C4232A4196D400FD4993 /* AppRouterGroup.swift in Sources */,
 				ECF7EB8E2A40417200189774 /* AppDetailPage+Header.swift in Sources */,
 				ECF7EB922A40634E00189774 /* AppDetailPage+Content.swift in Sources */,
+				ECE1C41A2A416FD300FD4993 /* AppDetailListPage+Content.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1404,6 +1432,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ECE1C41C2A41963A00FD4993 /* XCRemoteSwiftPackageReference "LinkNavigator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/interactord/LinkNavigator";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ECE1C41D2A41963A00FD4993 /* LinkNavigator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ECE1C41C2A41963A00FD4993 /* XCRemoteSwiftPackageReference "LinkNavigator" */;
+			productName = LinkNavigator;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D221DDC12A388DA7000220F8 /* Project object */;
 }
