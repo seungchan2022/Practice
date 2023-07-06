@@ -1,5 +1,4 @@
 import SwiftUI
-import LinkNavigator
 
 @main
 struct AppMain {
@@ -12,7 +11,8 @@ extension AppMain {
 extension AppMain: App {
   var body: some Scene {
     WindowGroup {
-      AppSearchPage2()
+      AppSearchPage(searchUseCase: appDelegate.diContainer.searchUseCase)
+//      AppSearchPage2()
 //            .preferredColorScheme(.dark)
     }
   }

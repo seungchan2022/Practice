@@ -1,11 +1,14 @@
 import SwiftUI
 import DesignSystem
+import Domain
 
 struct AppSearchPage {
   
   @FocusState private var isFocused
   @State private var keyword = ""
-  @State private var items: [String] = mock
+//  @State private var items: [String] = mock
+  @State private var itemList: [SearchEntity.Response.Result.Item] = []
+  let searchUseCase: SearchUseCaseDomain
 }
 
 extension AppSearchPage {
@@ -27,9 +30,9 @@ extension AppSearchPage: View {
   @ViewBuilder
   var content: some View {
     List {
-      ForEach(items, id: \.self) { title in
+      ForEach(itemList, id: \.id) { item in
         HStack {
-          Text(title)
+          Text(item.trackName)
         }
         .listRowSeparator(.hidden)
         .listRowBackground(Color.white)
@@ -38,7 +41,7 @@ extension AppSearchPage: View {
       }
     }
     .listStyle(.plain)
-    .animation(.spring(), value: items)
+    .animation(.spring(), value: itemList)
   }
   
   var body: some View {
@@ -52,14 +55,19 @@ extension AppSearchPage: View {
       content
     }
     .background(AppColor.Background.base)
-    .onAppear {
-            print(items)
-    }
     .onTapGesture {
       isFocused = false
     }
-    .onChange(of: keyword) {
-      items = keyword.isEmpty ? mock : filter($0)
+//    .onChange(of: keyword) {
+//      items = keyword.isEmpty ? mock : filter($0)
+//    }
+    .task {
+      do {
+        let result = try await searchUseCase.search(.init(term: "스타워즈"))
+        itemList = result.resultList
+      } catch {
+        print("DEBUG: Error", error)
+      }
     }
   }
 }

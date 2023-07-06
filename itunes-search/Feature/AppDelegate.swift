@@ -1,6 +1,4 @@
 import UIKit
-import SwiftUI
-import LinkNavigator
 
 final class AppDelegate: NSObject {
 
